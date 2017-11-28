@@ -37,5 +37,5 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/backOffice/Produit/show, role: ROLE_USER }
-        - { path: ^/backOffice, roles: ROLE_ADMIN }
+        - { path: ^/backOffice, role: ROLE_ADMIN }
         - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }

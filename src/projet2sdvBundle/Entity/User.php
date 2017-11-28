@@ -19,12 +19,12 @@ class User extends BaseUser
      */
     protected $id;
 
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="adresse", type="string", length=255, nullable=true, options={"default" : ""})
-//     */
-//    private $adresse;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="adresse", type="string", length=255, nullable=true, options={"default" : ""})
+     */
+    private $adresse;
 
     public function __construct()
     {
@@ -35,26 +35,26 @@ class User extends BaseUser
     }
 
 
-//    /**
-//     * Set adresse
-//     *
-//     * @param string $adresse
-//     *
-//     * @return user
-//     */
-//    public function setAdresse($adresse)
-//    {
-//        $this->adresse = $adresse;
-//
-//        return $this;
-//    }
-//    /**
-//     * Get adresse
-//     *
-//     * @return string
-//     */
-//    public function getAdresse()
-//    {
-//        return $this->adresse;
-//    }
+    /**
+     * Set adresse
+     *
+     * @param string $adresse
+     *
+     * @return user
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+    /**
+     * Get adresse
+     *
+     * @return string
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
 }

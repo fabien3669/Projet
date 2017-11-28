@@ -27,9 +27,10 @@ class ProduitController extends Controller
      */
     public function showAction()
     {
+
 		$em = $this->getDoctrine()->getManager();
 		$products = $em->getRepository('projet2sdvBundle:sproduits')
-			->findAll();
+			->getProduits();
 
 		return $this->render(
 			'projet2sdvBundle:backOff/Produit:show.html.twig',

@@ -4,13 +4,15 @@
 		{% if   app.session.get('droit') is defined and  app.session.get('droit') == 'DROITadmin' %}
 			<a href="{{ path('produit.add') }}"> Ajouter un produit </a>
 		{% endif %}
-
 		<table>
-			<caption>Recapitulatifs des produits (avec twig)</caption>
+			<caption>Recapitulatifs des produits</caption>
 			<thead>
-			<tr><th>nom</th><th>id</th><th>type</th><th>prix</th><th>nom photo</th><th>photo</th>
-				{% if   app.session.get('droit') is defined and  app.session.get('droit') == 'DROITadmin' %}
+			<tr><th>nom</th><th>id</th><th>type</th><th>prix</th><th>photo</th>
+				{% if is_granted('ROLE_ADMIN') %}
 					<th>opération</th>
+				{% endif %}
+				{% if is_granted('ROLE_CLIENT') %}
+					<th>Action</th>
 				{% endif %}
 			</tr>
 			</thead>
@@ -18,16 +20,24 @@
 			{% for produit in data if data is not empty %}
 
 				<tr>
-					<td>{{produit.nom}}</td><td>{{produit.id}}</td><td>{{produit.libelle}}</td><td>{{produit.prix}}</td><td>
-						{{produit.photo}}</td><td>
-						<img style="width:40px;height:40px" src="{{asset('images/')}}{{produit.photo}}" alt="image de {{produit.libelle}}" >
+					<td>{{produit.nom}}</td>
+					<td>{{produit.id}}</td>
+					<td>{{produit.libelle}}</td>
+					<td>{{produit.prix}}</td>
+					<td>
+						<img style="width:40px;height:40px" src="{{asset('images/')}}{{produit.photo}}" alt="image de {{produit.nom}}" >
 					</td>
-					{#%  if   app.session.get('droit') is defined and  app.session.get('droit') == 'DROITadmin' %#}
+					{%  if   is_granted('ROLE_ADMIN') %}
 						<td>
 							<a href="{{ path('produit.edit', {id: produit.id}) }}">modifier</a>
 							<a href="{{ path('produit.delete', {id: produit.id}) }}">supprimer</a>
 						</td>
-					{#% endif %#}
+					{% endif %}
+					{% if is_granted('ROLE_CLIENT') %}
+						<td>
+							<a href="{{ path('panier.addProduct', {id: produit.id}) }}">Ajouter au panier</a>
+						</td>
+					{% endif %}
 				</tr>
 			{% endfor %}
 			<tbody>

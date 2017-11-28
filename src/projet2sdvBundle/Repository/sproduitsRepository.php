@@ -12,21 +12,9 @@ class sproduitsRepository extends \Doctrine\ORM\EntityRepository
 {
 
     public function getProduits(){
-//        http://symfony.com/doc/current/doctrine/associations.html#joining-related-records
-//        $query = $this->getEntityManager()
-//            ->createQuery("SELECT p.id, t.libelle, p.nom, p.prix, p.photo
-//                            FROM test2crudBundle:sproduits as p
-//                            JOIN test2crudBundle:stypeProduits as t
-//                            WHERE p.typeProduit_id=t.id
-//                            ORDER BY p.nom");
-//
-//        return $query->getResult();
-
-
-        $qb=$this->createQueryBuilder('p'); // il lui faut une lettre, i : item en base de données donc schéma
+		$qb=$this->createQueryBuilder('p'); // il lui faut une lettre, i : item en base de données donc schéma
         $qb->select('p.id', 't.libelle', 'p.nom', 'p.prix', 'p.photo')
-            ->join( 'projet2sdvBundle:stypeProduits', 't')
-            ->where('p.typeProduit_id=t.id')
+            ->join( 'projet2sdvBundle:stypeProduits', 't', 'with', 'p.typeProduit=t.id')
             ->addOrderBy('p.nom', 'ASC');
         return $qb->getQuery()->getResult();
     }
