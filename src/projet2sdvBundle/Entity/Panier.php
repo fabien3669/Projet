@@ -8,6 +8,7 @@
 
 namespace projet2sdvBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,6 +56,7 @@ class Panier
 	public function __construct()
 	{
 		$this->dateAjoutPanier = new \DateTime('now');
+		$this->panierProduit = new ArrayCollection();
 	}
 
 
