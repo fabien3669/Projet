@@ -1,7 +1,7 @@
 <nav class="top-bar" data-topbar role="navigation">
     <ul class="title-area"> 
       <li class="name"> 
-        <h1> <a href="">TP web<span style="color:#ff0000;"> menu avec twig</span></a></h1>
+        <h1> <a href="{{ path('home') }}">TP web</a></h1>
       </li> 
       <li class="toggle-topbar menu-icon">
         <a href="#"><span>Menu</span></a>
@@ -36,9 +36,7 @@
             {#{% endif %}#}
 
             {% if    app.user is defined %}
-                <li class="name" style="color: #d58512">Connecté en tant que : {{ app.user.username }} </li>
                 <li><a href="{{ path('fos_user_security_logout') }}" > Se déconnecter</a></li>
-                {% if app.user.hasRole('ROLE_ADMIN') %} administration {% endif %}
             {% else %}
                 <li><a href="{{ path('fos_user_security_login')  }}">Se connecter</a></li>
                 <li><a href="{{ path('fos_user_registration_register')  }}">S'enregistrer</a></li>
