@@ -201,38 +201,4 @@ class sproduits
     {
         return $this->panierProduit;
     }
-
-    /**
-     * Add panier
-     *
-     * @param \projet2sdvBundle\Entity\Panier $panier
-     *
-     * @return sproduits
-     */
-    public function addPanier(\projet2sdvBundle\Entity\Panier $panier)
-    {
-        $this->panier[] = $panier;
-
-        return $this;
-    }
-
-    /**
-     * Remove panier
-     *
-     * @param \projet2sdvBundle\Entity\Panier $panier
-     */
-    public function removePanier(\projet2sdvBundle\Entity\Panier $panier)
-    {
-        $this->panier->removeElement($panier);
-    }
-
-    /**
-     * Get panier
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPanier()
-    {
-        return $this->panier;
-    }
 }

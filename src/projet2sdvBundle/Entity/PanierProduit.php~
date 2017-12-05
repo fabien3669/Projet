@@ -1,0 +1,44 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: fabien
+ * Date: 28/11/17
+ * Time: 15:12
+ */
+
+namespace projet2sdvBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Class PanierProduit
+ * @ORM\Entity(repositoryClass="projet2sdvBundle\Repository\PanierProduitRepository")
+ */
+class PanierProduit
+{
+	/**
+	 * @var int
+	 *
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="projet2sdvBundle\Entity\Panier", inversedBy="panierProduit")
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+	private $panier;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="projet2sdvBundle\Entity\sproduits", inversedBy="panierProduit")
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+	private $produit;
+
+	/**
+	 * @ORM\Column(name="quantite", type="integer")
+	 */
+	private $quantite;
+}

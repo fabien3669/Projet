@@ -10,9 +10,10 @@ namespace projet2sdvBundle\Controller;
 
 
 use projet2sdvBundle\Entity\Panier;
-use projet2sdvBundle\Entity\PanierProduit;
+use projet2sdvBundle\Entity\sproduits;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class PanierController extends Controller
 {
@@ -29,23 +30,27 @@ class PanierController extends Controller
 	/**
 	 * @Route("/frontOff/Panier/add", name="panier.addProduct")
 	 */
-	public function addProductAction()
+	public function addProductAction(Request $request)
 	{
+		$id = $request->query->get('id');
 		$user = $this->getUser();
 		$em = $this->getDoctrine()->getManager();
 		$panier = $em->getRepository('projet2sdvBundle:Panier')
-			->getPanier($user);
-
+			->getPanier($user, $id);
+		$produit = $em->getRepository('projet2sdvBundle:sproduits')
+			->findOneBy(['id' => $id]);
 		if ($panier==null){
 			$panier = new Panier();
 			$panier->setUser($user);
+			$panier->setProduit($produit);
+			$panier->setQuantite(1);
 			$em->persist($panier);
 			$em->flush();
 		}
-
-		if (($panier->getPanierProduit())->getProduit() == $produit){
-//TODO
+		else{
+			$panier->setQuantite($panier->getQuantite()+1);
 		}
+		return $this->redirectToRoute('produit.show');
 	}
 
 

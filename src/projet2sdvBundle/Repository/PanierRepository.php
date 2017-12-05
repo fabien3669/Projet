@@ -1,24 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fabien
- * Date: 28/11/17
- * Time: 15:48
- */
 
 namespace projet2sdvBundle\Repository;
 
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use projet2sdvBundle\Entity\User;
 
-class PanierRepository extends \Doctrine\ORM\EntityRepository
+class PanierRepository extends EntityRepository
 {
-	public function getPanier(User $user)
+	public function getPanier(User $user, $id)
 	{
 		$qb = $this->createQueryBuilder('p');
-		$qb->where('p.user = ? ')
-			->orderBy('p.dateAjoutPanier')
-			->setParameter('0', $user)
-			->setMaxResults(1);
-		return $qb->getQuery()->getSingleResult();
+		$qb	->innerjoin('projet2sdvBundle:sproduits', 'pr', 'p.produit=pr.panier')
+			->where('p.user = :user ')
+			->andWhere('pr.id = :id ')
+			->setParameter('user', $user)
+			->setParameter('id', $id)
+		;
+		return $qb->getQuery()->getOneOrNullResult();
 	}
 }
