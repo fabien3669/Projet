@@ -22,9 +22,18 @@ class PanierController extends Controller
 
 	}
 
+	/**
+	 * @Route("/frontOff/Panier/show", name="panier.show")
+	 */
 	public function showAction()
 	{
-
+		$em = $this->getDoctrine()->getManager();
+		$paniers = $em->getRepository('projet2sdvBundle:Panier')
+			->findAll();
+		return $this->render(
+			'projet2sdvBundle:frontOff/Panier:show.html.twig',
+			array('data' => $paniers)
+		);
 	}
 
 	/**
@@ -33,23 +42,22 @@ class PanierController extends Controller
 	public function addProductAction(Request $request)
 	{
 		$id = $request->query->get('id');
-		$user = $this->getUser();
 		$em = $this->getDoctrine()->getManager();
+		$produit =$em->getRepository('projet2sdvBundle:sproduits')->findOneBy(array('id' => $id));
+		$user = $this->getUser();
 		$panier = $em->getRepository('projet2sdvBundle:Panier')
-			->getPanier($user, $id);
-		$produit = $em->getRepository('projet2sdvBundle:sproduits')
-			->findOneBy(['id' => $id]);
+			->findOneBy(array('user'=>$user, 'produit' => $produit));
 		if ($panier==null){
 			$panier = new Panier();
 			$panier->setUser($user);
 			$panier->setProduit($produit);
 			$panier->setQuantite(1);
 			$em->persist($panier);
-			$em->flush();
 		}
 		else{
 			$panier->setQuantite($panier->getQuantite()+1);
 		}
+		$em->flush();
 		return $this->redirectToRoute('produit.show');
 	}
 

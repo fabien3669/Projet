@@ -160,47 +160,6 @@ class sproduits
     {
         return $this->typeProduit;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->panierProduit = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add panierProduit
-     *
-     * @param \projet2sdvBundle\Entity\PanierProduit $panierProduit
-     *
-     * @return sproduits
-     */
-    public function addPanierProduit(\projet2sdvBundle\Entity\PanierProduit $panierProduit)
-    {
-        $this->panierProduit[] = $panierProduit;
-
-        return $this;
-    }
-
-    /**
-     * Remove panierProduit
-     *
-     * @param \projet2sdvBundle\Entity\PanierProduit $panierProduit
-     */
-    public function removePanierProduit(\projet2sdvBundle\Entity\PanierProduit $panierProduit)
-    {
-        $this->panierProduit->removeElement($panierProduit);
-    }
-
-    /**
-     * Get panierProduit
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPanierProduit()
-    {
-        return $this->panierProduit;
-    }
 
     /**
      * Add panier

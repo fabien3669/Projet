@@ -2,6 +2,7 @@
 
 namespace projet2sdvBundle\Repository;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
 /**
  * sproduitsRepository
  *
@@ -11,11 +12,14 @@ namespace projet2sdvBundle\Repository;
 class sproduitsRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function getProduits(){
-		$qb=$this->createQueryBuilder('p'); // il lui faut une lettre, i : item en base de données donc schéma
-        $qb->select('p.id', 't.libelle', 'p.nom', 'p.prix', 'p.photo')
+    public function getProduits($page, $nbParPage){
+		$qb=$this->createQueryBuilder('p');
+        $qb->addselect('p.id', 't.libelle', 'p.nom', 'p.prix', 'p.photo')
             ->join( 'projet2sdvBundle:stypeProduits', 't', 'with', 'p.typeProduit=t.id')
             ->addOrderBy('p.nom', 'ASC');
-        return $qb->getQuery()->getResult();
+        $query = $qb->getQuery();
+        $query->setFirstResult(($page-1)*$nbParPage)
+			->setMaxResults($nbParPage);
+        return new Paginator($query, true);
     }
 }

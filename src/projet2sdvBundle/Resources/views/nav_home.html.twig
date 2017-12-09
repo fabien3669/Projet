@@ -1,22 +1,22 @@
-<nav class="top-bar" data-topbar role="navigation">
-    <ul class="title-area"> 
-      <li class="name"> 
-        <h1> <a href="{{ path('home') }}">TP web</a></h1>
-      </li> 
-      <li class="toggle-topbar menu-icon">
-        <a href="#"><span>Menu</span></a>
-      </li> 
-    </ul> 
-    <section class="top-bar-section">
-      <ul class="left">
-        <li class="divider"></li>
-        <li class="has-dropdown"><a href="#">produit</a>
-          <ul class="dropdown">
-            <li><a href="{{ path('produit.show') }}">afficher les produits</a></li>
-          </ul>
-        </li>
-      </ul>
-        <ul class="right">
+<nav class="navbar-inverse" data-topbar role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ path('home') }}">TP web</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle=""dropdown>
+                    Produits
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{ path('produit.show') }}">afficher les produits</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
             {% if    app.user is defined and app.user is not null %}
                 <li class="name" style="color: #d58512">Connecté en tant que : {{ app.user.username }} </li>
                 <li><a href="{{ path('fos_user_security_logout') }}" > Se déconnecter</a></li>
@@ -26,5 +26,5 @@
                 <li><a href="{{ path('fos_user_registration_register')  }}">S'enregistrer</a></li>
             {% endif %}
         </ul>
-    </section> 
+    </div>
 </nav>

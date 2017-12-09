@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="panier")
  * @ORM\Entity(repositoryClass="projet2sdvBundle\Repository\PanierRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Panier
 {
@@ -61,6 +62,8 @@ class Panier
 	public function __construct()
 	{
 		$this->dateAjoutPanier = new \DateTime('now');
+		$this->quantite = 0;
+		$this->prix = 0;
 	}
 
     /**
@@ -191,5 +194,14 @@ class Panier
     public function getQuantite()
     {
         return $this->quantite;
+    }
+
+	/**
+	 * @ORM\PreUpdate
+	 * @ORM\PrePersist
+	 */
+	public function updatePanier()
+	{
+		$this->setPrix($this->getQuantite()*$this->getProduit()->getPrix());
     }
 }

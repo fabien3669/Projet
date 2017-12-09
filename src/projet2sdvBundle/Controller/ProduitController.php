@@ -22,19 +22,26 @@ class ProduitController extends Controller
     }
 
     /**
-     * @Route("/backOffice/Produit/show",name="produit.show")
+     * @Route("/backOffice/Produit/show/{page}",
+	 *     name="produit.show",
+	 *	   requirements={"page"="\d+"}
+	 * )
      * @Method({"GET"})
      */
-    public function showAction()
+    public function showAction($page=1)
     {
 
 		$em = $this->getDoctrine()->getManager();
 		$products = $em->getRepository('projet2sdvBundle:sproduits')
-			->getProduits();
+			->getProduits($page, 4);
+		$nbPage = ceil(count($products)/4);
 
+		if (($page > $nbPage && $nbPage!=0 ) || $page<1){
+			throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+		}
 		return $this->render(
 			'projet2sdvBundle:backOff/Produit:show.html.twig',
-			array('data' => $products)
+			array('data' => $products, 'nbPage' => $nbPage, 'currentPage' => $page)
 		);
     }
 
