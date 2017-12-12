@@ -1,0 +1,38 @@
+{% extends "projet2sdvBundle::layout.html.twig" %}
+{% block contenu %}
+	{% set mois = ["janvier", "février", "mars", "avril", "mai",
+		"juin", "juillet", "août", "septembre", "octobre",
+		"novembre", "décembre"
+	] %}
+	<div class="container text">
+		{% if dates is not empty %}
+			<ul class="list-group">
+				{% for i in range(0, dates|length-1) %}
+					{% set dateCommande = dates[i].dateCommande %}
+					{% set nbProd = nbProduits[i][1] %}
+					<li class="list-group-item">
+						Commande du
+						{{ dateCommande|date("j") }}
+						{{ mois[dateCommande|date(" m ")-1] }}
+						{{ dateCommande|date("Y \\à H:i:s") }}
+						<span class="badge">{{ nbProd }}</span>
+						<ul>
+							<li>
+								{% set year = dateCommande|date("Y") %}
+								{% set month = dateCommande|date("m") %}
+								{% set day = dateCommande|date("d") %}
+								{% set hour = dateCommande|date("H") %}
+								{% set minute = dateCommande|date("i") %}
+								{% set seconde = dateCommande|date("s") %}
+								<a href="{{ path('commande.details', {'year': year, 'month': month, 'day': day, 'hours': hour, 'minutes': minute, 'secondes': seconde}) }}">Détails de la commande</a>
+							</li>
+						</ul>
+					</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			Vous n'avez pas encore de commandes... Essayez de regarder nos produits
+		{% endif %}
+	</div>
+
+{% endblock %}

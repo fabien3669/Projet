@@ -1,44 +1,55 @@
 {% extends "projet2sdvBundle::layout.html.twig" %}
 {% block contenu %}
-	<div class="row">
-		<div class="btn-toolbar">
-			<div class="btn-group">
-				<button class="btn btn-default">test</button>
-				<span>5</span>
-				<button class="btn btn-default">test</button>
+	{% if data is not empty %}
+		{% set prixTotal = 0 %}
+		<div class="container">
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<caption class="text">Recapitulatifs du panier</caption>
+					<thead>
+					<tr>
+						<th>Nom du véhicule</th>
+						<th>Catégorie du véhicule</th>
+						<th>Quantité</th>
+						<th>Prix Total</th>
+						<th>Photo du véhicule</th>
+						<th>Ajouter ou Supprimer</th>
+					</tr>
+					</thead>
+					<tbody>
+					{% for panier in data if data is not empty %}
+						{% set prixTotal = prixTotal+ panier.prix %}
+						<tr>
+							<td>{{panier.Produit.nom}}</td>
+							<td>{{panier.Produit.typeProduit.libelle}}</td>
+							<td>{{ panier.quantite }}</td>
+							<td>{{panier.prix}}</td>
+							<td>
+								<img width="100px;" height="20px;" class="img-responsive img-thumbnail" src="{{ asset(panier.Produit.image.webPath) }}" alt="{{ panier.Produit.image.alt }}" >
+							</td>
+							<td>
+								<form action="{{ path('panier.remadd', {'id': panier.Produit.id}) }}" method="post">
+									<div class="btn-group">
+										<button type="submit" name="ajouter" class="btn btn-default">+</button>
+										<button type="submit" name="retirer" class="btn btn-default">-</button>
+									</div>
+									<button type="submit" name="supprimer" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
+								</form>
+							</td>
+						</tr>
+					{% endfor %}
+					<tr>
+						<td></td><td></td><td>TOTAL</td><td>{{ prixTotal }}</td><td></td><td><a href="{{ path('panier.validate') }}">Valider le panier</a></td>
+					</tr>
+					<tbody>
+				</table>
 			</div>
-		</div>
-		<table>
-			<caption>Recapitulatifs du panier</caption>
-			<thead>
-			<tr>
-				<th>nom</th>
-				<th>type</th>
-				<th>Quantité</th>
-				<th>Prix Total</th>
-				<th>photo</th>
-				<th>Action</th>
-			</tr>
-			</thead>
-			<tbody>
-			{% for panier in data if data is not empty %}
 
-				<tr>
-					<td>{{panier.Produit.nom}}</td>
-					<td>{{panier.Produit.typeProduit.libelle}}</td>
-					<td>{{ panier.quantite }}</td>
-					<td>{{panier.prix}}</td>
-					<td>
-						<img style="width:40px;height:40px" src="{{asset('images/')}}{{panier.Produit.photo}}" alt="image de {{panier.Produit.nom}}" >
-					</td>
-					<td>
-						<a href="{{ path('panier.addProduct', {id: panier.Produit.id}) }}">Ajouter au panier</a>
-						{#<a href="{{ path('panier.removeProduct', {id: panier.Produit.id}) }}">Retirer du panier</a>#}
-					</td>
-				</tr>
-			{% endfor %}
-			<tbody>
-		</table>
-	</div>
+		</div>
+	{% else %}
+		<div class="text container">
+			Votre panier est actuellement vide. N'hésitez pas à regarder nos véhicules.
+		</div>
+	{% endif %}
 {% endblock %}
 

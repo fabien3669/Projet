@@ -1,0 +1,49 @@
+{% extends "projet2sdvBundle::layout.html.twig" %}
+{% block contenu %}
+	{% if commandes is not empty %}
+		<div class="container">
+			<div class="table-responsible">
+				<table class="table table-stiped">
+					<caption class="text">Récapitulatif des Commandes</caption>
+					<thead>
+						<tr>
+							<th>Date de Commande</th>
+							<th>Nom du véhicule</th>
+							<th>Catégorie du véhicule</th>
+							<th>Quantité</th>
+							<th>Prix Unitaire</th>
+							<th>Photo du véhicule</th>
+							<th>Adresse Livraison</th>
+							<th>Etat de la Commande</th>
+							<th>Modifier l'Etat</th>
+						</tr>
+					</thead>
+
+					<tbody>
+					{% for commande in commandes %}
+						<tr>
+							<td>{{ commande.dateCommande|date("d/m/Y H:i:s") }}</td>
+							<td>{{commande.Produit.nom}}</td>
+							<td>{{commande.Produit.typeProduit.libelle}}</td>
+							<td>{{ commande.quantite }}</td>
+							<td>{{commande.prixUnitaire}}</td>
+							<td>
+								<img width="100px;" height="20px;" class="img-responsive img-thumbnail" src="{{ asset(commande.Produit.image.webPath) }}" alt="{{ commande.Produit.image.alt }}" >
+							</td>
+							<td>{{ commande.adresseLivraison }}</td>
+							<td>{{ commande.etat.libelle }}</td>
+							<td>
+								<a href="{{ path('GestionCommande.editCommande', {'id': commande.id}) }}"><span class="glyphicon glyphicon-pencil text"></span></a>
+							</td>
+						</tr>
+					{% endfor %}
+					<tbody>
+				</table>
+			</div>
+		</div>
+	{% else %}
+		<div class="container text">
+			Vos véhicules n'ont pas encore trouvé prenneur. Soyez patient !
+		</div>
+	{% endif %}
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace projet2sdvBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * sproduits
@@ -37,6 +38,7 @@ class sproduits
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
+	 * @Assert\Length(min=2, minMessage="Le nom doit faire au moins {{ limit }} caractères")
      */
     private $nom;
 
@@ -44,15 +46,15 @@ class sproduits
      * @var float
      *
      * @ORM\Column(name="prix", type="float")
+	 * @Assert\Regex("/^([0-9]*[,.])?[0-9]+$/", message="Le prix doit être numérique")
      */
     private $prix;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="photo", type="string", length=255)
+     * @ORM\OneToOne(targetEntity="projet2sdvBundle\Entity\Image", cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
-    private $photo;
+    private $image;
 
 
     /**
@@ -114,30 +116,6 @@ class sproduits
     }
 
     /**
-     * Set photo
-     *
-     * @param string $photo
-     *
-     * @return sproduits
-     */
-    public function setPhoto($photo)
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-    /**
-     * Get photo
-     *
-     * @return string
-     */
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    /**
      * Set typeProduit
      *
      * @param \projet2sdvBundle\Entity\stypeProduits $typeProduit
@@ -193,5 +171,36 @@ class sproduits
     public function getPanier()
     {
         return $this->panier;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->panier = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set image
+     *
+     * @param \projet2sdvBundle\Entity\Image $image
+     *
+     * @return sproduits
+     */
+    public function setImage(\projet2sdvBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \projet2sdvBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

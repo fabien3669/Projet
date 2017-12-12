@@ -1,13 +1,13 @@
 {% extends "projet2sdvBundle::layout.html.twig" %}
 {% block contenu %}
-<div class="container text">
+	<div class="container text">
 		<p>
-		Etes-vous sur de vouloir suprimer le véhicule "{{ produit.nom }}" ?
+		Etes-vous sur de vouloir retirer "{{ produit.nom }}" de votre panier ?
 		</p>
-		{{ form_start(form) }}
+		<form action="{{ path('panier.remove', {'id': produit.id}) }}" method="post">
 			<input type="submit" name="delete" value="Oui" class="btn btn-danger">
 			<input type="submit" name="delete" value="Non" class="btn btn-success">
 			{{ form_rest(form) }}
-		{{ form_end(form) }}
+		</form>
 	</div>
 {% endblock %}

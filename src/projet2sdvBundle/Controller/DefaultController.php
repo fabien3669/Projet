@@ -14,7 +14,7 @@ class DefaultController extends Controller
     public function indexAction()
 	{
 
-        if (! is_null($this->getUser()) and $this->getUser()->hasRole('ROLE_CLIENT') )
+        if (! is_null($this->getUser()) and !$this->getUser()->hasRole('ROLE_ADMIN') )
 
            return $this->render("projet2sdvBundle:frontOff:frontOFFICE.html.twig");
         if (! is_null($this->getUser()) and $this->getUser()->hasRole('ROLE_ADMIN') )

@@ -1,0 +1,12 @@
+{% extends "projet2sdvBundle::layout.html.twig" %}
+{% block contenu %}
+	<div class="container text">
+		<ul class="list-group">
+			<li class="list-group-item">Nom d'Utilisateur : {{ data.username }}</li>
+			<li class="list-group-item">Adresse Email : {{ data.email }}</li>
+			<li class="list-group-item">Adresse : {{ data.adresse }}</li>
+			<li class="list-group-item"><a href="{{ path('fos_user_change_password') }}">Modifier le Mot de Passe</a></li>
+			<li class="list-group-item"><a href="{{ path('fos_user_profile_edit') }}">Modifier mon Profil</a></li>
+		</ul>
+	</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "projet2sdvBundle::layout.html.twig" %}
+{% block contenu %}
+	 <div class="well">
+		{{ form_start(form) }}
+		{{ form_errors(form) }}
+		{{ form_row(form.etat) }}
+		 <div class="text">
+			 <a href="{{ path('GestionCommande.showGestion') }}"><span class="glyphicon glyphicon-chevron-left"></span>Retour</a>
+		 </div>
+		 {{ form_rest(form) }}
+		{{ form_end(form) }}
+	 </div>
+{% endblock %}

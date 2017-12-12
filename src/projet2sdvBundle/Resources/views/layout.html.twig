@@ -5,9 +5,10 @@
     <link rel="icon" type="image/x-icon" href="http://www.iut-bm.univ-fcomte.fr/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Concession</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" >
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
   <body>
   {% if app.user is defined and app.user is not null %}
@@ -19,7 +20,11 @@
   {% else %}
       {% include "projet2sdvBundle::nav_home.html.twig" %}
   {% endif%}
-
+  {% for message in app.session.flashbag.get('Info') %}
+    <p class="well">
+      Information : {{ message }}
+    </p>
+  {% endfor %}
 
 
 {% block contenu %}
@@ -29,11 +34,7 @@
   {% block fos_user_content %}
   {% endblock fos_user_content %}
 
-<script src="{{ asset('assets/js/vendor/jquery.js') }}"></script>
-<script src="{{ asset('assets/js/foundation.min.js') }}"></script>
-<script>
-  $(document).foundation();
-</script>
+
   </body>
 </html>
 

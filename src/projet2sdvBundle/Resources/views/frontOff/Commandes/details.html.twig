@@ -1,0 +1,46 @@
+{% extends "projet2sdvBundle::layout.html.twig" %}
+{% block contenu %}
+	<div class="container">
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<caption class="text">Détail de la commande du {{ commandes[0].dateCommande|date("d/m/Y \\à H\\hi") }}</caption>
+				<thead>
+				<tr>
+					<th>Nom du véhicule</th>
+					<th>Catégorie du véhicule</th>
+					<th>Quantité</th>
+					<th>Prix Unitaire</th>
+					<th>Photo du véhicule</th>
+					<th>Adresse Livraison</th>
+					<th>Etat de la Commande</th>
+					<th>Total Commande</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% set sommeTotal=0 %}
+				{% for commande in commandes %}
+					<tr>
+						<td>{{commande.Produit.nom}}</td>
+						<td>{{commande.Produit.typeProduit.libelle}}</td>
+						<td>{{ commande.quantite }}</td>
+						<td>{{commande.prixUnitaire}}</td>
+						<td>
+							<img width="100px;" height="20px;" class="img-responsive img-thumbnail" src="{{ asset(commande.Produit.image.webPath) }}" alt="{{ commande.Produit.image.alt }}" >
+						</td>
+						<td>{{ commande.adresseLivraison }}</td>
+						<td>{{ commande.etat.libelle }}</td>
+						<td>
+							{{ commande.quantite * commande.prixUnitaire }}
+							{% set sommeTotal = sommeTotal + commande.quantite * commande.prixUnitaire %}
+						</td>
+					</tr>
+				{% endfor %}
+				<tr>
+					<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>{{ sommeTotal }}</td>
+				</tr>
+				<tbody>
+			</table>
+		</div>
+
+	</div>
+{% endblock %}

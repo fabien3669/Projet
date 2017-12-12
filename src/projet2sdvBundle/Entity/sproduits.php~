@@ -3,6 +3,7 @@
 namespace projet2sdvBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * sproduits
@@ -37,6 +38,7 @@ class sproduits
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
+	 * @Assert\Length(min=2, minMessage="Le nom doit faire au moins {{ limit }} caractères")
      */
     private $nom;
 
@@ -44,15 +46,15 @@ class sproduits
      * @var float
      *
      * @ORM\Column(name="prix", type="float")
+	 * @Assert\Regex("/^([0-9]*[,.])?[0-9]+$/", message="Le prix doit être numérique")
      */
     private $prix;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="photo", type="string", length=255)
+     * @ORM\OneToOne(targetEntity="projet2sdvBundle\Entity\Image", cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
-    private $photo;
+    private $image;
 
 
     /**
@@ -114,30 +116,6 @@ class sproduits
     }
 
     /**
-     * Set photo
-     *
-     * @param string $photo
-     *
-     * @return sproduits
-     */
-    public function setPhoto($photo)
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-    /**
-     * Get photo
-     *
-     * @return string
-     */
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    /**
      * Set typeProduit
      *
      * @param \projet2sdvBundle\Entity\stypeProduits $typeProduit
@@ -160,45 +138,38 @@ class sproduits
     {
         return $this->typeProduit;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->panierProduit = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add panierProduit
+     * Add panier
      *
-     * @param \projet2sdvBundle\Entity\PanierProduit $panierProduit
+     * @param \projet2sdvBundle\Entity\Panier $panier
      *
      * @return sproduits
      */
-    public function addPanierProduit(\projet2sdvBundle\Entity\PanierProduit $panierProduit)
+    public function addPanier(\projet2sdvBundle\Entity\Panier $panier)
     {
-        $this->panierProduit[] = $panierProduit;
+        $this->panier[] = $panier;
 
         return $this;
     }
 
     /**
-     * Remove panierProduit
+     * Remove panier
      *
-     * @param \projet2sdvBundle\Entity\PanierProduit $panierProduit
+     * @param \projet2sdvBundle\Entity\Panier $panier
      */
-    public function removePanierProduit(\projet2sdvBundle\Entity\PanierProduit $panierProduit)
+    public function removePanier(\projet2sdvBundle\Entity\Panier $panier)
     {
-        $this->panierProduit->removeElement($panierProduit);
+        $this->panier->removeElement($panier);
     }
 
     /**
-     * Get panierProduit
+     * Get panier
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPanierProduit()
+    public function getPanier()
     {
-        return $this->panierProduit;
+        return $this->panier;
     }
 }
